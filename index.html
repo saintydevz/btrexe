@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTR • Next-Gen Roblox Executor • 2025</title>
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --primary-dark: #0066ff;
+            --secondary: #7a2aff;
+            --accent: #ff2d75;
+            --dark: #0a0a14;
+            --light: #f0f4ff;
+            --gray: #8a9bb8;
+            --glow: rgba(0, 240, 255, 0.15);
+            --windows-accent: #0078D7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://example.com/geist-regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            animation: gradientShift 20s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-color: var(--dark); }
+            50% { background-color: #0f0f1e; }
+            100% { background-color: var(--dark); }
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50vh;
+            left: -50vw;
+            width: 200vw;
+            height: 200vh;
+            background: radial-gradient(circle at center, var(--glow) 0%, transparent 70%);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -2;
+            animation: pulse 12s infinite alternate;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -50vh;
+            right: -50vw;
+            width: 200vw;
+            height: 200vh;
+            background: radial-gradient(circle at center, var(--glow) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -2;
+            animation: pulse 15s infinite alternate-reverse;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.85); opacity: 0.3; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.15); opacity: 0.3; }
+        }
+        
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .mouse-glow {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--primary) 10%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+        
+        .glow-circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: float-glow 10s infinite ease-in-out;
+        }
+        
+        .glow-circle-1 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--primary), transparent 60%);
+            top: 15%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .glow-circle-2 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--secondary), transparent 60%);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 1.5s;
+        }
+        
+        .glow-circle-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--accent), transparent 60%);
+            top: 50%;
+            left: 25%;
+            animation-delay: 3s;
+        }
+        
+        .glow-circle-4 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-dark), transparent 60%);
+            top: 70%;
+            right: 15%;
+            animation-delay: 4.5s;
+        }
+        
+        @keyframes float-glow {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+            50% { transform: translate(30px, 40px) scale(1.2); opacity: 0.25; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+        }
+        
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) translateX(30px); opacity: 0; }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        header {
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1600px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+        
+        .logo h1::after {
+            content: '2025';
+            position: absolute;
+            top: -8px;
+            right: -28px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), #ff7e5f);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--dark);
+        }
+        
+        .version {
+            background: rgba(0, 240, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            animation: pulseButton 2s infinite;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.6s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 240, 255, 0.5);
+        }
+        
+        .download-btn:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes pulseButton {
+            0% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+        }
+        
+        .hero {
+            padding: 14rem 5% 8rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1.8rem;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero h2 span {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            color: var(--gray);
+            max-width: 550px;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.7rem 1.3rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+        
+        .badge:hover::after {
+            left: 100%;
+        }
+        
+        .badge:hover {
+            border-color: var(--primary);
+            background: rgba(0, 240, 255, 0.15);
+            transform: scale(1.05);
+        }
+        
+        .badge i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .cta-btns {
+            display: flex;
+            gap: 1.2rem;
+        }
+        
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            animation: pulseButton 2s infinite;
+        }
+        
+        .secondary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.6s;
+        }
+        
+        .secondary-btn:hover::before {
+            left: 100%;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .hero-image {
+            position: relative;
+            flex-shrink: 0;
+            perspective: 1000px;
+        }
+        
+        .hero-image-container {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(0, 240, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: float 8s ease-in-out infinite;
+            transition: transform 0.3s ease-out;
+        }
+        
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(122, 42, 255, 0.15));
+            pointer-events: none;
+        }
+        
+        .hero-image-container img {
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0px); }
+            50% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(-20px); }
+            100% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0px); }
+        }
+        
+        .features, .how-to-use, .stats, .download-section, .faq-section, .ratings-section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+        
+        .section-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-title {
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        .section-title h3 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--gray);
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        .features-grid, .how-to-use-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card, .how-to-use-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .feature-card::before, .how-to-use-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .feature-card:hover, .how-to-use-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: transparent;
+        }
+        
+        .feature-card:hover::before, .how-to-use-card:hover::before {
+            opacity: 0.4;
+        }
+        
+        .feature-icon, .how-to-use-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(to bottom right, rgba(0, 240, 255, 0.2), rgba(122, 42, 255, 0.2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .how-to-use-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.4rem;
+        }
+        
+        .feature-card h4, .how-to-use-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+        
+        .feature-card p, .how-to-use-card p {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+        
+        .stats::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+        
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        .stat-item h4 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+            line-height: 1;
+        }
+        
+        .stat-item p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .download-section {
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(122, 42, 255, 0.1));
+            z-index: -1;
+        }
+        
+        .download-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .download-section h3 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .download-section p {
+            color: var(--gray);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .windows-badge {
+            background: rgba(0, 240, 255, 0.15);
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            backdrop-filter: blur(5px);
+        }
+        
+        .windows-badge i {
+            font-size: 1.5rem;
+        }
+        
+        .download-btn.download-section-btn {
+            width: 300px;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+        
+        .requirements {
+            margin-top: 4rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .requirements h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--light);
+        }
+        
+        .requirement-item i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        .faq-section {
+            background: rgba(10, 10, 20, 0.6);
+        }
+        
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+        
+        .faq-question {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 2rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 2rem 1.5rem;
+        }
+        
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        
+        .ratings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .rating-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .rating-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .rating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-title {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .stars {
+            color: gold;
+            font-size: 1.2rem;
+        }
+        
+        .rating-content {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        footer {
+            background: rgba(10, 10, 20, 0.9);
+            padding: 6rem 5% 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .footer-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .footer-bottom {
+            margin-top: 6rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.95rem;
+            opacity: 0.7;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-links a {
+            color: var(--gray);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            z-index: -1;
+        }
+        
+        .orb-1 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--primary), transparent 60%);
+            top: -120px;
+            left: -120px;
+            animation: float-orb 12s infinite ease-in-out;
+        }
+        
+        .orb-2 {
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, var(--secondary), transparent 60%);
+            bottom: -220px;
+            right: -220px;
+            animation: float-orb 15s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(60px, 60px) rotate(120deg); }
+            66% { transform: translate(-40px, 90px) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @media (max-width: 1200px) {
+            .hero h2 {
+                font-size: 3.5rem;
+            }
+            
+            .section-title h3 {
+                font-size: 2.5rem;
+            }
+            
+            .download-section h3 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 12rem;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .badges, .cta-btns {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                margin-top: 4rem;
+            }
+            
+            .hero-image-container {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title h3 {
+                font-size: 2.2rem;
+            }
+            
+            .stat-item h4 {
+                font-size: 3rem;
+            }
+            
+            .features-grid, .how-to-use-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-section h3 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .download-btn, .secondary-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section-title h3 {
+                font-size: 1.8rem;
+            }
+            
+            .stat-item h4 {
+                font-size: 2.5rem;
+            }
+            
+            .faq-question {
+                padding: 1.2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <div class="grid-pattern"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <div class="glow-circle glow-circle-1"></div>
+    <div class="glow-circle glow-circle-2"></div>
+    <div class="glow-circle glow-circle-3"></div>
+    <div class="glow-circle glow-circle-4"></div>
+    
+    <div class="mouse-glow" id="mouse-glow"></div>
+    
+    <div class="particles" id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>BTR</h1>
+                <span class="version">v1.0.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-to-use">How to Use</a>
+                <a href="#faq">FAQ</a>
+                <a href="#ratings">Ratings</a>
+            </div>
+            <button class="download-btn">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </nav>
+    </header>
+    
+    <section class="hero fade-in">
+        <div class="hero-content">
+            <h2>🔥 Next-Generation <span>Roblox Scripting</span></h2>
+            <p>BTR 2025 Edition redefines Roblox development with cutting-edge execution technology, designed for creators who demand the absolute best performance and reliability.</p>
+            
+            <div class="badges">
+                <div class="badge">
+                    <i class="fas fa-bolt"></i> Quantum Execution
+                </div>
+                <div class="badge">
+                    <i class="fas fa-code"></i> Lua 5.4++
+                </div>
+                <div class="badge">
+                    <i class="fas fa-brain"></i> AI Integration
+                </div>
+                <div class="badge">
+                    <i class="fab fa-windows"></i> Windows 11 Optimized
+                </div>
+            </div>
+            
+            <div class="cta-btns">
+                <button class="download-btn">
+                    <i class="fas fa-download"></i> Download Now
+                </button>
+                <button class="secondary-btn">
+                    <i class="fas fa-question-circle"></i> FAQ
+                </button>
+            </div>
+        </div>
+        <div class="hero-image" id="hero-image">
+            <div class="hero-image-container">
+                <img src="https://example.com/btr-2025-interface.png" alt="BTR 2025 Interface">
+            </div>
+        </div>
+    </section>
+    
+    <section class="features fade-in" id="features">
+        <div class="section-container">
+            <div class="section-title">
+                <h3>Future-Proof Features</h3>
+                <p>Discover the advanced capabilities that make BTR the ultimate choice for Roblox scripting in 2025.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                    <h4>High-Speed Execution</h4>
+                    <p>Experience unparalleled script execution speeds with our optimized quantum engine, designed for complex workflows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Advanced Security</h4>
+                    <p>Robust anti-detection systems ensure your scripts run smoothly without interruptions or bans.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <h4>Enhanced Lua Support</h4>
+                    <p>Full compatibility with Lua 5.4++ for advanced scripting capabilities and modern development workflows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h4>AI-Powered Debugging</h4>
+                    <p>Integrated AI tools to automatically detect and suggest fixes for script errors in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="how-to-use fade-in" id="how-to-use">
+        <div class="section-container">
+            <div class="section-title">
+                <h3>How to Use BTR</h3>
+                <p>Follow these simple steps to start scripting with BTR and unlock your creative potential.</p>
+            </div>
+            <div class="how-to-use-grid">
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-download"></i></div>
+                    <h4>1. Download</h4>
+                    <p>Download the BTR installer from our official website.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-folder-open"></i></div>
+                    <h4>2. Open</h4>
+                    <p>Run the installer and launch the BTR application on your Windows device.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-list"></i></div>
+                    <h4>3. Select a PID</h4>
+                    <p>Choose the Roblox process ID (PID) from the list of running processes.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-link"></i></div>
+                    <h4>4. Attach</h4>
+                    <p>Attach BTR to the selected Roblox process to enable scripting.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-code"></i></div>
+                    <h4>5. Insert a Script</h4>
+                    <p>Paste or write your Lua script in the BTR script editor.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-play"></i></div>
+                    <h4>6. Execute</h4>
+                    <p>Run your script with a single click and watch it come to life in Roblox.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <div class="how-to-use-icon"><i class="fas fa-smile"></i></div>
+                    <h4>7. Have Fun!</h4>
+                    <p>Enjoy creating and exploring new possibilities with BTR!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="stats fade-in">
+        <div class="stat-item">
+            <h4>1M+</h4>
+            <p>Active Users</p>
+        </div>
+        <div class="stat-item">
+            <h4>99.9%</h4>
+            <p>Uptime Guarantee</p>
+        </div>
+        <div class="stat-item">
+            <h4>500K+</h4>
+            <p>Scripts Executed</p>
+        </div>
+        <div class="stat-item">
+            <h4>24/7</h4>
+            <p>Support Availability</p>
+        </div>
+    </section>
+    
+    <section class="download-section fade-in" id="download">
+        <div class="download-container">
+            <h3>Ready to Unlock Your Potential?</h3>
+            <p>Join thousands of creators who trust BTR for their Roblox scripting needs. Download now and experience the future of scripting.</p>
+            <div class="windows-badge">
+                <i class="fab fa-windows"></i>
+                Windows 10/11 (64-bit)
+            </div>
+            <button class="download-btn">
+                <i class="fas fa-download"></i> Download 99 Unlock
+            </button>
+            <div class="requirements">
+                <h4>System Requirements</h4>
+                <div class="requirement-item">
+                    <i class="fas fa-check-circle"></i> Windows 10/11 (64-bit)
+                </div>
+                <div class="requirement-item">
+                    <i class="fas fa-check-circle"></i> 4GB RAM (8GB recommended)
+                </div>
+                <div class="requirement-item">
+                    <i class="fas fa-check-circle"></i> 1GB free storage
+                </div>
+                <div class="requirement-item">
+                    <i class="fas fa-check-circle"></i> Internet connection
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq-section fade-in" id="faq">
+        <div class="section-container">
+            <div class="section-title">
+                <h3>Frequently Asked Questions</h3>
+                <p>Got questions? We've got answers. Check out the most common inquiries about BTR.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is BTR safe to use?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, BTR incorporates advanced anti-detection technology to ensure safe and secure script execution.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What versions of Windows are supported?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>BTR is optimized for Windows 10 and 11 (64-bit versions).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use BTR for free?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>BTR offers a free version with core features, with premium options for advanced functionality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="ratings-section fade-in" id="ratings">
+        <div class="section-container">
+            <div class="section-title">
+                <h3>User Ratings</h3>
+                <p>Hear what our community has to say about their experience with BTR.</p>
+            </div>
+            <div class="ratings-grid">
+                <div class="rating-card">
+                    <div class="rating-header">
+                        <div class="user-info">
+                            <div class="user-avatar">JD</div>
+                            <div>
+                                <div class="user-name">John Doe</div>
+                                <div class="user-title">Script Developer</div>
+                            </div>
+                        </div>
+                        <div class="stars">★★★★★</div>
+                    </div>
+                    <div class="rating-content">
+                        BTR has transformed my workflow. The AI debugging feature is a game-changer!
+                    </div>
+                </div>
+                <div class="rating-card">
+                    <div class="rating-header">
+                        <div class="user-info">
+                            <div class="user-avatar">AS</div>
+                            <div>
+                                <div class="user-name">Alice Smith</div>
+                                <div class="user-title">Game Creator</div>
+                            </div>
+                        </div>
+                        <div class="stars">★★★★☆</div>
+                    </div>
+                    <div class="rating-content">
+                        Super fast and reliable, though I’d love more tutorials for beginners.
+                    </div>
+                </div>
+                <div class="rating-card">
+                    <div class="rating-header">
+                        <div class="user-info">
+                            <div class="user-avatar">MK</div>
+                            <div>
+                                <div class="user-name">Mike King</div>
+                                <div class="user-title">Roblox Enthusiast</div>
+                            </div>
+                        </div>
+                        <div class="stars">★★★★★</div>
+                    </div>
+                    <div class="rating-content">
+                        The best executor I’ve ever used! Highly recommended for anyone serious about scripting.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="fade-in">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About BTR</h4>
+                <div class="footer-links">
+                    <a href="#">Our Mission</a>
+                    <a href="#">Team</a>
+                    <a href="#">Blog</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <div class="footer-links">
+                    <a href="#">FAQ</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Community</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">License</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <div class="footer-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">Guides</a>
+                    <a href="#">API</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">BTR</div>
+            <div class="copyright">© 2025 BTR Technologies. All rights reserved.</div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mouse-following Glow
+        const mouseGlow = document.getElementById('mouse-glow');
+        document.addEventListener('mousemove', (e) => {
+            mouseGlow.style.left = `${e.clientX}px`;
+            mouseGlow.style.top = `${e.clientY}px`;
+        });
+
+        // Particle System
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: ['#00f0ff', '#7a2aff', '#ff2d75'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'top',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Fade-in Animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => observer.observe(element));
+
+        // Card Tilt Effect
+        const cards = document.querySelectorAll('.feature-card, .how-to-use-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const tiltX = y / rect.height * 20;
+                const tiltY = -x / rect.width * 20;
+                card.style.transform = `translateY(-10px) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Parallax Effect with Debounce
+        let lastScroll = 0;
+        const debounce = (func, wait) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        };
+
+        const handleParallax = debounce(() => {
+            const heroImage = document.querySelector('#hero-image .hero-image-container');
+            const scrollPosition = window.pageYOffset;
+            if (Math.abs(scrollPosition - lastScroll) > 10) {
+                const parallaxValue = scrollPosition * 0.3;
+                heroImage.style.transform = `rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(${parallaxValue}px)`;
+                lastScroll = scrollPosition;
+            }
+        }, 100);
+
+        window.addEventListener('scroll', handleParallax);
+    </script>
+</body>
+</html>
