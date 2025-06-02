@@ -333,6 +333,22 @@
             left: 100%;
         }
         
+        .download-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--dark);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         @keyframes pulseButton {
             0% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
             50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); }
@@ -403,6 +419,18 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: orbit 10s infinite ease-in-out;
+        }
+        
+        .badge:nth-child(1) { animation-delay: 0s; }
+        .badge:nth-child(2) { animation-delay: 2s; }
+        .badge:nth-child(3) { animation-delay: 4s; }
+        .badge:nth-child(4) { animation-delay: 6s; }
+        
+        @keyframes orbit {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
         
         .badge::after {
@@ -500,6 +528,10 @@
             position: relative;
             animation: float 8s ease-in-out infinite;
             transition: transform 0.3s ease-out;
+        }
+        
+        .hero-image-container:hover {
+            transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) scale(1.1);
         }
         
         .hero-image-container::before {
@@ -744,6 +776,14 @@
             line-height: 1.8;
         }
         
+        .download-disclaimer {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            max-width: 600px;
+            text-align: center;
+        }
+        
         .windows-badge {
             background: rgba(0, 240, 255, 0.15);
             color: var(--primary);
@@ -755,7 +795,7 @@
             gap: 12px;
             margin-bottom: 3rem;
             border: 1px solid rgba(0, 240, 255, 0.4);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
         
         .windows-badge i {
@@ -765,7 +805,7 @@
         .download-btn.download-section-btn {
             width: 300px;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
         }
         
         .requirements {
@@ -777,7 +817,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
         
         .requirements h4 {
@@ -792,7 +832,7 @@
         .requirement-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 1rem;
             margin-bottom: 1rem;
             font-size: 1rem;
             color: var(--light);
@@ -800,7 +840,7 @@
         
         .requirement-item i {
             color: var(--primary);
-            font-size: 0.8rem;
+            font-size: 1rem;
         }
         
         .faq-section {
@@ -849,12 +889,12 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
             padding: 0 2rem;
         }
         
         .faq-item.active .faq-answer {
-            max-height: 500px;
+            max-height: 200px;
             padding: 0 2rem 1.5rem;
         }
         
@@ -863,11 +903,19 @@
             line-height: 1.8;
         }
         
+        .ratings-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
         .ratings-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 4rem;
+            width: 100%;
+            max-width: 1600px;
         }
         
         .rating-card {
@@ -875,12 +923,13 @@
             border-radius: 16px;
             padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
         
         .rating-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         .rating-header {
@@ -904,13 +953,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--dark);
+            color: black;
             font-weight: bold;
             font-size: 1.2rem;
         }
         
         .user-name {
             font-weight: 600;
+            color: var(--light);
         }
         
         .user-title {
@@ -939,8 +989,13 @@
             max-width: 1600px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
+        }
+        
+        .footer-column {
+            display: flex;
+            flex-direction: column;
         }
         
         .footer-column h4 {
@@ -1031,7 +1086,7 @@
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.25;
-            z-index: -1;
+            z-index: 0;
         }
         
         .orb-1 {
@@ -1047,21 +1102,22 @@
             width: 650px;
             height: 650px;
             background: radial-gradient(circle, var(--secondary), transparent 60%);
-            bottom: -220px;
-            right: -220px;
+            bottom: -120px;
+            right: -120px;
             animation: float-orb 15s infinite ease-in-out reverse;
         }
-        
         @keyframes float-orb {
             0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(60px, 60px) rotate(120deg); }
-            66% { transform: translate(-40px, 90px) rotate(240deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
+            33% { transform: translate(60px, 60px); rotate(120deg); }
+            66% { transform: translate(-40px, 90px); rotate(240deg);
+ }
+            100% { transform: translate(0, 0); }
+            padding-top: 2px; }
         }
         
         @media (max-width: 1200px) {
             .hero h2 {
-                font-size: 3.5rem;
+                font-size: 48px;
             }
             
             .section-title h3 {
@@ -1127,7 +1183,7 @@
             }
             
             .download-section h3 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
         }
         
@@ -1179,83 +1235,88 @@
     
     <div class="mouse-glow" id="mouse-glow"></div>
     
-    <div class="particles" id="particles-js"></div>
+    <div  class="particles fade-in" id="particles-js"></div>
     
-    <header>
+    <header class="fade-in">
         <nav>
             <div class="logo">
-                <h1>BTR</h1>
+                <h1>BTR</h2>
                 <span class="version">v1.0.0</span>
             </div>
             <div class="nav-links">
-                <a href="#features">Features</a>
+                <a href="#features-section">Features</a>
                 <a href="#how-to-use">How to Use</a>
-                <a href="#faq">FAQ</a>
-                <a href="#ratings">Ratings</a>
+                <a href="#faq-section">FAQ</a>
+                <a href="#ratings-section">Ratings</a>
             </div>
-            <button class="download-btn">
-                <i class="fas fa-download"></i> Download
-            </button>
+            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn">
+                <i class="fas fa-download"></i>
+ Download</a>
         </nav>
     </header>
     
     <section class="hero fade-in">
         <div class="hero-content">
             <h2>🔥 Next-Generation <span>Roblox Scripting</span></h2>
-            <p>BTR 2025 Edition redefines Roblox development with cutting-edge execution technology, designed for creators who demand the absolute best performance and reliability.</p>
-            
+            <p>BTR v1.0.0 redefines Roblox development with cutting-edge execution technology, designed for developers who demand the absolute best performance and reliability.</p>
             <div class="badges">
                 <div class="badge">
-                    <i class="fas fa-bolt"></i> Quantum Execution
+                    <i class="fas fa-bolt"></i>
+                    Quantum Execution
                 </div>
                 <div class="badge">
-                    <i class="fas fa-code"></i> Lua 5.4++
+                    <i class="fas fa-code"></i>
+                    Lua 5.4++
                 </div>
                 <div class="badge">
-                    <i class="fas fa-brain"></i> AI Integration
+                    <i class="fas fa-brain"></i>
+                    AI Integration
                 </div>
                 <div class="badge">
-                    <i class="fab fa-windows"></i> Windows 11 Optimized
+                    <i class="fab fa-windows"></i>
+                    Windows 11 Optimized
                 </div>
             </div>
             
             <div class="cta-btns">
-                <button class="download-btn">
+                <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn">
                     <i class="fas fa-download"></i> Download Now
-                </button>
-                <button class="secondary-btn">
-                    <i class="fas fa-question-circle"></i> FAQ
-                </button>
+                </a>
+                <a href="#faq-section" class="secondary-btn">
+                    <i class="fas fa-question-circle"></i>
+                    FAQ
+                </a>
             </div>
         </div>
         <div class="hero-image" id="hero-image">
             <div class="hero-image-container">
-                <img src="https://i.ibb.co/h1TgsW7B/Screenshot-2025-06-02-100934.png" alt="BTR 2025 Interface">
+                <div>
+                <img src="https://i.ibb.co/h1TgsW7B/Screenshot-2025-06-02-100934.png" alt="BTR v1.0.0 Interface">
             </div>
         </div>
     </section>
     
-    <section class="features fade-in" id="features">
+    <section class="features fade-in" id="features-section">
         <div class="section-container">
             <div class="section-title">
-                <h3>Future-Proof Features</h3>
-                <p>Discover the advanced capabilities that make BTR the ultimate choice for Roblox scripting in 2025.</p>
+                <h2>Future-Proof Features</h3>
+                <div class="p">Discover the advanced capabilities that make BTR the ultimate choice for Roblox developers in 2025.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-rocket"></i></div>
-                    <h4>High-Speed Execution</h4>
-                    <p>Experience unparalleled script execution speeds with our optimized quantum engine, designed for complex workflows.</p>
+                    <div class="h4">High-Speed Execution</h4>
+                    <p>Experience unparalleled performance with our optimized quantum engine, designed for complex workflows.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h4>Advanced Security</h4>
-                    <p>Robust anti-detection systems ensure your scripts run smoothly without interruptions or bans.</p>
+                    <p>Robust anti-detection systems ensure your scripts run smoothly without interruptions.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-code"></i></div>
                     <h4>Enhanced Lua Support</h4>
-                    <p>Full compatibility with Lua 5.4++ for advanced scripting capabilities and modern development workflows.</p>
+                    <p>Full compatibility with Lua 5.4++ for advanced scripting capabilities.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-brain"></i></div>
@@ -1275,44 +1336,50 @@
             <div class="how-to-use-grid">
                 <div class="how-to-use-card">
                     <div class="how-to-use-icon"><i class="fas fa-download"></i></div>
-                    <h4>1. Download</h4>
+                    <h4>Download</h4>
                     <p>Download the BTR installer from our official website.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-folder-open"></i></div>
-                    <h4>2. Open</h4>
-                    <p>Run the installer and launch the BTR application on your Windows device.</p>
+                    <div class="how-to-use-icon"><i class="fas fa-folder-open"></i>
+                    <h4>Open</h4>
+                    <p>Run the installer and launch BTR application on your Windows device.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-list"></i></div>
-                    <h4>3. Select a PID</h4>
+                    <div class="how-to-use-icon"><i class="fas fa-list"></i>
+</div>
+                    <h4>Select a PID</h4>
                     <p>Choose the Roblox process ID (PID) from the list of running processes.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-link"></i></div>
-                    <h4>4. Attach</h4>
+                    <div class="how-to-use-icon"><i class="fas fa-link"></i>
+</div>
+                    <h4>Attach</h4>
                     <p>Attach BTR to the selected Roblox process to enable scripting.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-code"></i></div>
-                    <h4>5. Insert a Script</h4>
-                    <p>Paste or write your Lua script in the BTR script editor.</p>
+                    <div class="how-to-use-icon"><i class="fas fa-code"></i>
+</div>
+                    <h4>Insert a Script</h4>
+                    <p>WPaste or write your Lua script in the BTR script editor.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-play"></i></div>
-                    <h4>6. Execute</h4>
-                    <p>Run your script with a single click and watch it come to life in Roblox.</p>
+                    <div class="how-to-use-icon">
+<i class="fas fa-play"></i>
+</div>
+                    <h4>Execute</h4>
+                    <p>ARun your script with a single click and watch it come to life in Roblox.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-smile"></i></div>
-                    <h4>7. Have Fun!</h4>
+                    <div class="how-to-use-icon"><i class="fas fa-smile"></i>
+                    <h4>Have Fun!</h4>
+                    </div>
                     <p>Enjoy creating and exploring new possibilities with BTR!</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <section class="stats fade-in">
+    <section class="stats-section fade-in">
         <div class="stat-item">
             <h4>1M+</h4>
             <p>Active Users</p>
@@ -1334,14 +1401,15 @@
     <section class="download-section fade-in" id="download">
         <div class="download-container">
             <h3>Ready to Unlock Your Potential?</h3>
-            <p>Join thousands of creators who trust BTR for their Roblox scripting needs. Download now and experience the future of scripting.</p>
+            <p>Join thousands of developers who trust BTR for their Roblox scripting needs. Download now and experience the future of scripting.</p>
             <div class="windows-badge">
                 <i class="fab fa-windows"></i>
                 Windows 10/11 (64-bit)
             </div>
-            <button class="download-btn">
-                <i class="fas fa-download"></i> Download 99 Unlock
-            </button>
+            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn download-section-btn">
+                <i class="fas fa-download"></i> Download Now
+            </a>
+            <p class="download-disclaimer">Please verify the file’s authenticity and scan with antivirus software before running. Requires Windows 10/11 (64-bit).</p>
             <div class="requirements">
                 <h4>System Requirements</h4>
                 <div class="requirement-item">
@@ -1360,7 +1428,7 @@
         </div>
     </section>
     
-    <section class="faq-section fade-in" id="faq">
+    <section class="faq-section fade-in" id="faq-section">
         <div class="section-container">
             <div class="section-title">
                 <h3>Frequently Asked Questions</h3>
@@ -1373,7 +1441,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, BTR incorporates advanced anti-detection technology to ensure safe and secure script execution.</p>
+                        <p>Yes, BTR uses advanced anti-detection technology to ensure safe and secure script execution.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1382,7 +1450,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>BTR is optimized for Windows 10 and 11 (64-bit versions).</p>
+                        <p>BTR is optimized for Windows 10 and 11 (64-bit).</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1398,7 +1466,7 @@
         </div>
     </section>
     
-    <section class="ratings-section fade-in" id="ratings">
+    <section class="ratings-section fade-in" id="ratings-section">
         <div class="section-container">
             <div class="section-title">
                 <h3>User Ratings</h3>
@@ -1494,16 +1562,16 @@
             <div class="copyright">© 2025 BTR Technologies. All rights reserved.</div>
             <div class="social-links">
                 <a href="#"><i class="fab fa-discord"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"> <i class="fab fa-twitter"></i></a>
+                <a href="#"> <i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
     
     <script>
         // Mouse-following Glow
-        const mouseGlow = document.getElementById('mouse-glow');
-        document.addEventListener('mousemove', (e) => {
+        const mouseGlow = document.querySelectorById('#mouse-glow');
+        document.addEventListener('mousemove', (e =>) {
             mouseGlow.style.left = `${e.clientX}px`;
             mouseGlow.style.top = `${e.clientY}px`;
         });
@@ -1511,7 +1579,7 @@
         // Particle System
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 100, density: { enable: true, value_area: 800 } },
                 color: { value: ['#00f0ff', '#7a2aff', '#ff2d75'] },
                 shape: { type: 'circle' },
                 opacity: { value: 0.5, random: true },
@@ -1571,6 +1639,14 @@
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Download Button Loader
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('loading');
+                setTimeout(() => btn.classList.remove('loading'), 2000);
             });
         });
 
