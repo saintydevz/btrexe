@@ -174,20 +174,6 @@
             pointer-events: none;
         }
         
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            animation: float-particle linear infinite;
-        }
-        
-        @keyframes float-particle {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-120vh) translateX(30px); opacity: 0; }
-        }
-        
         .fade-in {
             opacity: 0;
             transform: translateY(50px);
@@ -311,6 +297,7 @@
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
             animation: pulseButton 2s infinite;
+            text-decoration: none;
         }
         
         .download-btn::before {
@@ -321,7 +308,11 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.6s;
+            transition: left 0.6s ease;
+        }
+        
+        .download-btn:hover::before {
+            left: 100%;
         }
         
         .download-btn:hover {
@@ -329,19 +320,16 @@
             box-shadow: 0 8px 30px rgba(0, 240, 255, 0.5);
         }
         
-        .download-btn:hover::before {
-            left: 100%;
-        }
-        
         .download-btn.loading::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--dark);
-            border-top: 3px solid transparent;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--dark);
+            border-top: 2px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            right: 10px;
         }
         
         @keyframes spin {
@@ -419,17 +407,17 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: orbit 10s infinite ease-in-out;
+            animation: orbit 8s infinite ease-in-out;
         }
         
         .badge:nth-child(1) { animation-delay: 0s; }
-        .badge:nth-child(2) { animation-delay: 2s; }
-        .badge:nth-child(3) { animation-delay: 4s; }
-        .badge:nth-child(4) { animation-delay: 6s; }
+        .badge:nth-child(2) { animation-delay: 1s; }
+        .badge:nth-child(3) { animation-delay: 2s; }
+        .badge:nth-child(4) { animation-delay: 3s; }
         
         @keyframes orbit {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-5px); }
             100% { transform: translateY(0); }
         }
         
@@ -440,12 +428,9 @@
             left: -60%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(to right, 
-                transparent, 
-                rgba(255, 255, 255, 0.15), 
-                transparent);
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
             transform: rotate(30deg);
-            transition: all 0.5s ease;
+            transition: left 0.5s ease;
         }
         
         .badge:hover::after {
@@ -455,7 +440,8 @@
         .badge:hover {
             border-color: var(--primary);
             background: rgba(0, 240, 255, 0.15);
-            transform: scale(1.05);
+            transform: scale(1.05) translateY(0);
+            animation-play-state: paused;
         }
         
         .badge i {
@@ -485,6 +471,7 @@
             position: relative;
             overflow: hidden;
             animation: pulseButton 2s infinite;
+            text-decoration: none;
         }
         
         .secondary-btn::before {
@@ -495,7 +482,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: 0.6s;
+            transition: left 0.6s ease;
         }
         
         .secondary-btn:hover::before {
@@ -521,13 +508,11 @@
             overflow: hidden;
             transform-style: preserve-3d;
             transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg);
-            box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.3),
-                0 0 60px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 240, 255, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             animation: float 8s ease-in-out infinite;
-            transition: transform 0.3s ease-out;
+            transition: transform 0.3s ease;
         }
         
         .hero-image-container:hover {
@@ -543,19 +528,20 @@
             bottom: 0;
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(122, 42, 255, 0.15));
             pointer-events: none;
+            z-index: 1;
         }
         
         .hero-image-container img {
             width: 100%;
             display: block;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
         @keyframes float {
-            0% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0px); }
+            0% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0); }
             50% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(-20px); }
-            100% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0px); }
+            100% { transform: rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(0); }
         }
         
         .features, .how-to-use, .stats, .download-section, .faq-section, .ratings-section {
@@ -597,14 +583,14 @@
         
         .features-grid, .how-to-use-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
         
         .feature-card, .how-to-use-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 3rem 2rem;
             transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -624,12 +610,12 @@
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             z-index: -1;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
         
         .feature-card:hover, .how-to-use-card:hover {
             transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0,0.3);
             border-color: transparent;
         }
         
@@ -638,22 +624,22 @@
         }
         
         .feature-icon, .how-to-use-icon {
-            width: 64px;
-            height: 64px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(to bottom right, rgba(0, 240, 255, 0.2), rgba(122, 42, 255, 0.2));
-            border-radius: 16px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
         }
         
         .how-to-use-icon {
-            width: 48px;
-            height: 48px;
-            font-size: 1.4rem;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
         }
         
         .feature-card h4, .how-to-use-card h4 {
@@ -666,7 +652,7 @@
         .feature-card p, .how-to-use-card p {
             color: var(--gray);
             line-height: 1.8;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
         
         .stats {
@@ -715,7 +701,7 @@
         }
         
         .stat-item h4 {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 800;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -727,7 +713,7 @@
         
         .stat-item p {
             color: var(--gray);
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 0.5px;
         }
         
@@ -744,7 +730,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(122, 42, 255, 0.1));
-            z-index: -1;
+            z-index: 0;
         }
         
         .download-container {
@@ -754,6 +740,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
         }
         
         .download-section h3 {
@@ -762,85 +749,82 @@
             font-weight: 800;
             background: linear-gradient(to right, var(--light), var(--gray));
             -webkit-background-clip: text;
-            background-clip: text;
             color: transparent;
         }
         
         .download-section p {
             color: var(--gray);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-size: 1.2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 600px;
             line-height: 1.8;
         }
         
         .download-disclaimer {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-top: 1rem;
-            max-width: 600px;
+            max-width: 500px;
             text-align: center;
+            line-height: 1.5;
         }
         
-        .windows-badge {
-            background: rgba(0, 240, 255, 0.15);
+        .windows {
+            background: rgba(0, 240, 255, 0.2);
             color: var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 3rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
             border: 1px solid rgba(0, 240, 255, 0.4);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
         
-        .windows-badge i {
-            font-size: 1.5rem;
+        .windows i {
+            font-size: 1.2rem;
         }
         
         .download-btn.download-section-btn {
-            width: 300px;
+            width: 250px;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
         
         .requirements {
-            margin-top: 4rem;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 2rem;
-            border-radius: 16px;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 600px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
         
         .requirements h4 {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             color: var(--gray);
             font-weight: 600;
-            letter-spacing: 1px;
             text-transform: uppercase;
         }
         
         .requirement-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 1rem;
+            gap: 8px;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
             color: var(--light);
         }
         
         .requirement-item i {
+            font-size: 0.8rem;
             color: var(--primary);
-            font-size: 1rem;
         }
         
         .faq-section {
@@ -853,9 +837,9 @@
         }
         
         .faq-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
             transition: all 0.3s ease;
@@ -867,7 +851,7 @@
         }
         
         .faq-question {
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 1.8rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -889,41 +873,33 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
-            padding: 0 2rem;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 1.8rem;
         }
         
         .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 2rem 1.5rem;
+            max-height: 150px;
+            padding-bottom: 1.2rem;
         }
         
         .faq-answer p {
             color: var(--gray);
-            line-height: 1.8;
-        }
-        
-        .ratings-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            line-height: 1.6;
         }
         
         .ratings-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 4rem;
-            width: 100%;
-            max-width: 1600px;
+            margin-top: 2rem;
         }
         
         .rating-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
         
@@ -936,7 +912,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
         .user-info {
@@ -946,16 +922,16 @@
         }
         
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: black;
+            color: var(--dark);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
         
         .user-name {
@@ -964,23 +940,24 @@
         }
         
         .user-title {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray);
         }
         
         .stars {
             color: gold;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
         
         .rating-content {
             color: var(--gray);
-            line-height: 1.7;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
         
         footer {
             background: rgba(10, 10, 20, 0.9);
-            padding: 6rem 5% 3rem;
+            padding: 4rem 5% 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
@@ -989,45 +966,38 @@
             max-width: 1600px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-        
-        .footer-column {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
         }
         
         .footer-column h4 {
-            font-size: 1.2rem;
-            margin-bottom: 1.8rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
             font-weight: 700;
             color: var(--light);
             position: relative;
-            display: inline-block;
         }
         
         .footer-column h4::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -5px;
             left: 0;
-            width: 40px;
-            height: 3px;
+            width: 30px;
+            height: 2px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 3px;
         }
         
         .footer-links {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.8rem;
         }
         
         .footer-links a {
             color: var(--gray);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
         }
         
@@ -1037,93 +1007,89 @@
         }
         
         .footer-bottom {
-            margin-top: 6rem;
-            padding-top: 3rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1rem;
             max-width: 1600px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .footer-logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
-            background-clip: text;
             color: transparent;
         }
         
         .copyright {
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             opacity: 0.7;
         }
         
         .social-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
         
         .social-links a {
             color: var(--gray);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
         
         .social-links a:hover {
             color: var(--primary);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
         
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.25;
+            opacity: 0.2;
             z-index: 0;
         }
         
         .orb-1 {
-            width: 450px;
-            height: 450px;
+            width: 400px;
+            height: 400px;
             background: radial-gradient(circle, var(--primary), transparent 60%);
-            top: -120px;
-            left: -120px;
+            top: -100px;
+            left: -100px;
             animation: float-orb 12s infinite ease-in-out;
         }
         
         .orb-2 {
-            width: 650px;
-            height: 650px;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(circle, var(--secondary), transparent 60%);
-            bottom: -120px;
-            right: -120px;
+            bottom: -100px;
+            right: -100px;
             animation: float-orb 15s infinite ease-in-out reverse;
         }
+        
         @keyframes float-orb {
             0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(60px, 60px); rotate(120deg); }
-            66% { transform: translate(-40px, 90px); rotate(240deg);
- }
-            100% { transform: translate(0, 0); }
-            padding-top: 2px; }
+            33% { transform: translate(30px, 30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
         
         @media (max-width: 1200px) {
             .hero h2 {
-                font-size: 48px;
+                font-size: 3rem;
             }
-            
             .section-title h3 {
                 font-size: 2.5rem;
             }
-            
             .download-section h3 {
                 font-size: 2.5rem;
             }
@@ -1133,90 +1099,80 @@
             .hero {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 12rem;
+                padding: 10rem 5% 6rem;
             }
-            
             .hero-content {
                 max-width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-            
             .hero p {
                 margin-left: auto;
                 margin-right: auto;
             }
-            
             .badges, .cta-btns {
                 justify-content: center;
             }
-            
             .hero-image {
-                margin-top: 4rem;
+                margin-top: 3rem;
             }
-            
             .hero-image-container {
-                max-width: 100%;
+                max-width: 500px;
             }
         }
         
         @media (max-width: 768px) {
             .hero h2 {
-                font-size: 2.8rem;
+                font-size: 2.2rem;
             }
-            
             .nav-links {
                 display: none;
             }
-            
             .section-title h3 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-            
             .stat-item h4 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
-            
             .features-grid, .how-to-use-grid {
                 grid-template-columns: 1fr;
             }
-            
             .download-section h3 {
-                font-size: 2.4rem;
+                font-size: 2rem;
+            }
+            .hero-image-container {
+                max-width: 100%;
             }
         }
         
         @media (max-width: 480px) {
             .hero h2 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
             }
-            
             .hero p {
                 font-size: 1rem;
             }
-            
             .cta-btns {
                 flex-direction: column;
                 width: 100%;
             }
-            
             .download-btn, .secondary-btn {
                 width: 100%;
                 justify-content: center;
             }
-            
             .section-title h3 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
-            
             .stat-item h4 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
-            
             .faq-question {
-                padding: 1.2rem;
                 font-size: 1rem;
+                padding: 1rem;
+            }
+            .download-section-btn {
+                width: 100%;
             }
         }
     </style>
@@ -1227,111 +1183,87 @@
     <div class="grid-pattern"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-    
     <div class="glow-circle glow-circle-1"></div>
     <div class="glow-circle glow-circle-2"></div>
     <div class="glow-circle glow-circle-3"></div>
     <div class="glow-circle glow-circle-4"></div>
-    
     <div class="mouse-glow" id="mouse-glow"></div>
-    
-    <div  class="particles fade-in" id="particles-js"></div>
+    <div class="particles" id="particles-js"></div>
     
     <header class="fade-in">
         <nav>
             <div class="logo">
-                <h1>BTR</h2>
+                <h1>BTR</h1>
                 <span class="version">v1.0.0</span>
             </div>
             <div class="nav-links">
-                <a href="#features-section">Features</a>
+                <a href="#features">Features</a>
                 <a href="#how-to-use">How to Use</a>
-                <a href="#faq-section">FAQ</a>
-                <a href="#ratings-section">Ratings</a>
+                <a href="#faq">FAQ</a>
+                <a href="#ratings">Ratings</a>
             </div>
-            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn">
-                <i class="fas fa-download"></i>
- Download</a>
+            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download</a>
         </nav>
     </header>
-    
+
     <section class="hero fade-in">
         <div class="hero-content">
             <h2>🔥 Next-Generation <span>Roblox Scripting</span></h2>
-            <p>BTR v1.0.0 redefines Roblox development with cutting-edge execution technology, designed for developers who demand the absolute best performance and reliability.</p>
+            <p>BTR v1.0.0 redefines Roblox development with cutting-edge execution technology, designed for creators who demand top performance.</p>
             <div class="badges">
-                <div class="badge">
-                    <i class="fas fa-bolt"></i>
-                    Quantum Execution
-                </div>
-                <div class="badge">
-                    <i class="fas fa-code"></i>
-                    Lua 5.4++
-                </div>
-                <div class="badge">
-                    <i class="fas fa-brain"></i>
-                    AI Integration
-                </div>
-                <div class="badge">
-                    <i class="fab fa-windows"></i>
-                    Windows 11 Optimized
-                </div>
+                <div class="badge"><i class="fas fa-bolt"></i> Quantum Execution</div>
+                <div class="badge"><i class="fas fa-code"></i> Lua 5.4++</div>
+                <div class="badge"><i class="fas fa-brain"></i> AI Integration</div>
+                <div class="badge"><i class="fab fa-windows"></i> Windows 11 Optimized</div>
             </div>
-            
             <div class="cta-btns">
-                <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn">
-                    <i class="fas fa-download"></i> Download Now
-                </a>
-                <a href="#faq-section" class="secondary-btn">
-                    <i class="fas fa-question-circle"></i>
-                    FAQ
-                </a>
+                <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download Now</a>
+                <a href="#faq" class="secondary-btn"><i class="fas fa-question-circle"></i> FAQ</a>
             </div>
         </div>
         <div class="hero-image" id="hero-image">
             <div class="hero-image-container">
-                <div>
-                <img src="https://i.ibb.co/h1TgsW7B/Screenshot-2025-06-02-100934.png" alt="BTR v1.0.0 Interface">
+                <img src="https://i.ibb.co/h1TgsW7B/Screenshot-2025-06-02-100934.png" alt="BTR v1.0.0 Interface" onerror="this.src='https://via.placeholder.com/600x400?text=BTR+Interface'">
             </div>
         </div>
     </section>
-    
-    <section class="features fade-in" id="features-section">
+
+    <section class="features fade-in" id="features">
         <div class="section-container">
             <div class="section-title">
-                <h2>Future-Proof Features</h3>
-                <div class="p">Discover the advanced capabilities that make BTR the ultimate choice for Roblox developers in 2025.</p>
+                <h3>Future-Proof Features</h3>
+                <p>Discover the advanced capabilities that make BTR the ultimate choice for Roblox scripting in 2025.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-rocket"></i></div>
-                    <div class="h4">High-Speed Execution</h4>
-                    <p>Experience unparalleled performance with our optimized quantum engine, designed for complex workflows.</p>
+                    <h4>High-Speed Execution</h4>
+                    <p>Experience unparalleled script execution with our optimized quantum engine.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h4>Advanced Security</h4>
-                    <p>Robust anti-detection systems ensure your scripts run smoothly without interruptions.</p>
+                    <p>Robust anti-detection systems ensure safe script execution.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-code"></i></div>
                     <h4>Enhanced Lua Support</h4>
-                    <p>Full compatibility with Lua 5.4++ for advanced scripting capabilities.</p>
+                    <p>Full compatibility with Lua 5.4++ for advanced scripting.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-brain"></i></div>
                     <h4>AI-Powered Debugging</h4>
-                    <p>Integrated AI tools to automatically detect and suggest fixes for script errors in real-time.</p>
+                    <p>AI tools detect and suggest fixes for script errors in real-time.</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section class="how-to-use fade-in" id="how-to-use">
         <div class="section-container">
             <div class="section-title">
                 <h3>How to Use BTR</h3>
-                <p>Follow these simple steps to start scripting with BTR and unlock your creative potential.</p>
+                <p>Follow these simple steps to start scripting with BTR.</p>
             </div>
             <div class="how-to-use-grid">
                 <div class="how-to-use-card">
@@ -1340,137 +1272,124 @@
                     <p>Download the BTR installer from our official website.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-folder-open"></i>
+                    <div class="how-to-use-icon"><i class="fas fa-folder-open"></i></div>
                     <h4>Open</h4>
-                    <p>Run the installer and launch BTR application on your Windows device.</p>
+                    <p>Run the installer and launch BTR on your Windows device.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-list"></i>
-</div>
+                    <div class="how-to-use-icon"><i class="fas fa-list"></i></div>
                     <h4>Select a PID</h4>
-                    <p>Choose the Roblox process ID (PID) from the list of running processes.</p>
+                    <p>Choose the Roblox process ID from the list.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-link"></i>
-</div>
+                    <div class="how-to-use-icon"><i class="fas fa-link"></i></div>
                     <h4>Attach</h4>
-                    <p>Attach BTR to the selected Roblox process to enable scripting.</p>
+                    <p>Attach BTR to the selected Roblox process.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-code"></i>
-</div>
-                    <h4>Insert a Script</h4>
-                    <p>WPaste or write your Lua script in the BTR script editor.</p>
+                    <div class="how-to-use-icon"><i class="fas fa-code"></i></div>
+                    <h4>Insert Script</h4>
+                    <p>Paste or write your Lua script in the editor.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon">
-<i class="fas fa-play"></i>
-</div>
+                    <div class="how-to-use-icon"><i class="fas fa-play"></i></div>
                     <h4>Execute</h4>
-                    <p>ARun your script with a single click and watch it come to life in Roblox.</p>
+                    <p>Run your script with a single click.</p>
                 </div>
                 <div class="how-to-use-card">
-                    <div class="how-to-use-icon"><i class="fas fa-smile"></i>
+                    <div class="how-to-use-icon"><i class="fas fa-smile"></i></div>
                     <h4>Have Fun!</h4>
-                    </div>
-                    <p>Enjoy creating and exploring new possibilities with BTR!</p>
+                    <p>Enjoy creating with BTR!</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section class="stats-section fade-in">
-        <div class="stat-item">
-            <h4>1M+</h4>
-            <p>Active Users</p>
-        </div>
-        <div class="stat-item">
-            <h4>99.9%</h4>
-            <p>Uptime Guarantee</p>
-        </div>
-        <div class="stat-item">
-            <h4>500K+</h4>
-            <p>Scripts Executed</p>
-        </div>
-        <div class="stat-item">
-            <h4>24/7</h4>
-            <p>Support Availability</p>
+
+    <section class="stats fade-in">
+        <div class="section-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>1M+</h4>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-item">
+                    <h4>99.9%</h4>
+                    <p>Uptime</p>
+                </div>
+                <div class="stat-item">
+                    <h4>500K+</h4>
+                    <p>Scripts Executed</p>
+                </div>
+                <div class="stat-item">
+                    <h4>24/7</h4>
+                    <p>Support</p>
+                </div>
+            </div>
         </div>
     </section>
-    
+
     <section class="download-section fade-in" id="download">
         <div class="download-container">
             <h3>Ready to Unlock Your Potential?</h3>
-            <p>Join thousands of developers who trust BTR for their Roblox scripting needs. Download now and experience the future of scripting.</p>
-            <div class="windows-badge">
-                <i class="fab fa-windows"></i>
-                Windows 10/11 (64-bit)
+            <p>Join thousands of creators who trust BTR for Roblox scripting.</p>
+            <div class="windows">
+                <i class="fab fa-windows"></i> Windows 10/11 (64-bit)
             </div>
-            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn download-section-btn">
-                <i class="fas fa-download"></i> Download Now
-            </a>
+            <a href="https://github.com/saintydevz/btrexe/releases/download/asdad/BTRv1.0.0.zip" target="_blank" class="download-btn download-section-btn"><i class="fas fa-download"></i> Download Now</a>
             <p class="download-disclaimer">Please verify the file’s authenticity and scan with antivirus software before running. Requires Windows 10/11 (64-bit).</p>
             <div class="requirements">
                 <h4>System Requirements</h4>
-                <div class="requirement-item">
-                    <i class="fas fa-check-circle"></i> Windows 10/11 (64-bit)
-                </div>
-                <div class="requirement-item">
-                    <i class="fas fa-check-circle"></i> 4GB RAM (8GB recommended)
-                </div>
-                <div class="requirement-item">
-                    <i class="fas fa-check-circle"></i> 1GB free storage
-                </div>
-                <div class="requirement-item">
-                    <i class="fas fa-check-circle"></i> Internet connection
-                </div>
+                <div class="requirement-item"><i class="fas fa-check-circle"></i> Windows 10/11 (64-bit)</div>
+                <div class="requirement-item"><i class="fas fa-check-circle"></i> 4GB RAM (8GB recommended)</div>
+                <div class="requirement-item"><i class="fas fa-check-circle"></i> 1GB free storage</div>
+                <div class="requirement-item"><i class="fas fa-check-circle"></i> Internet connection</div>
             </div>
         </div>
     </section>
-    
-    <section class="faq-section fade-in" id="faq-section">
+
+    <section class="faq-section fade-in" id="faq">
         <div class="section-container">
             <div class="section-title">
                 <h3>Frequently Asked Questions</h3>
-                <p>Got questions? We've got answers. Check out the most common inquiries about BTR.</p>
+                <p>Got questions? We’ve got answers about BTR.</p>
             </div>
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        Is BTR safe to use?
+                        <span>Is BTR safe to use?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, BTR uses advanced anti-detection technology to ensure safe and secure script execution.</p>
+                        <p>Yes, BTR uses advanced anti-detection technology for safe scripting.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        What versions of Windows are supported?
+                        <span>What versions of Windows are supported?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>BTR is optimized for Windows 10 and 11 (64-bit).</p>
+                        <p>BTR supports Windows 10 and 11 (64-bit).</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        Can I use BTR for free?
+                        <span>Can I use BTR for free?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>BTR offers a free version with core features, with premium options for advanced functionality.</p>
+                        <p>BTR offers a free version with core features, with premium options available.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section class="ratings-section fade-in" id="ratings-section">
+
+    <section class="ratings-section fade-in" id="ratings">
         <div class="section-container">
             <div class="section-title">
                 <h3>User Ratings</h3>
-                <p>Hear what our community has to say about their experience with BTR.</p>
+                <p>Hear what our community says about BTR.</p>
             </div>
             <div class="ratings-grid">
                 <div class="rating-card">
@@ -1485,7 +1404,7 @@
                         <div class="stars">★★★★★</div>
                     </div>
                     <div class="rating-content">
-                        BTR has transformed my workflow. The AI debugging feature is a game-changer!
+                        BTR transformed my workflow. AI debugging is a game-changer!
                     </div>
                 </div>
                 <div class="rating-card">
@@ -1500,7 +1419,7 @@
                         <div class="stars">★★★★☆</div>
                     </div>
                     <div class="rating-content">
-                        Super fast and reliable, though I’d love more tutorials for beginners.
+                        Fast and reliable, but I’d love more beginner tutorials.
                     </div>
                 </div>
                 <div class="rating-card">
@@ -1515,13 +1434,13 @@
                         <div class="stars">★★★★★</div>
                     </div>
                     <div class="rating-content">
-                        The best executor I’ve ever used! Highly recommended for anyone serious about scripting.
+                        The best executor I’ve used! Highly recommended.
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <footer class="fade-in">
         <div class="footer-container">
             <div class="footer-column">
@@ -1562,49 +1481,53 @@
             <div class="copyright">© 2025 BTR Technologies. All rights reserved.</div>
             <div class="social-links">
                 <a href="#"><i class="fab fa-discord"></i></a>
-                <a href="#"> <i class="fab fa-twitter"></i></a>
-                <a href="#"> <i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
-    
+
     <script>
         // Mouse-following Glow
-        const mouseGlow = document.querySelectorById('#mouse-glow');
-        document.addEventListener('mousemove', (e =>) {
-            mouseGlow.style.left = `${e.clientX}px`;
-            mouseGlow.style.top = `${e.clientY}px`;
-        });
+        const mouseGlow = document.getElementById('mouse-glow');
+        if (mouseGlow) {
+            document.addEventListener('mousemove', (e) => {
+                mouseGlow.style.left = `${e.clientX}px`;
+                mouseGlow.style.top = `${e.clientY}px`;
+            });
+        }
 
         // Particle System
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 100, density: { enable: true, value_area: 800 } },
-                color: { value: ['#00f0ff', '#7a2aff', '#ff2d75'] },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: false },
-                move: {
-                    enable: true,
-                    speed: 1,
-                    direction: 'top',
-                    random: true,
-                    straight: false,
-                    out_mode: 'out',
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: { enable: true, mode: 'repulse' },
-                    onclick: { enable: true, mode: 'push' },
-                    resize: true
-                }
-            },
-            retina_detect: true
-        });
+        if (window.particlesJS) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: ['#00f0ff', '#7a2aff', '#ff2d75'] },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: false },
+                    move: {
+                        enable: true,
+                        speed: 0.5,
+                        direction: 'top',
+                        random: true,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+        }
 
         // FAQ Toggle
         document.querySelectorAll('.faq-item').forEach(item => {
@@ -1615,16 +1538,19 @@
 
         // Fade-in Animation
         const fadeElements = document.querySelectorAll('.fade-in');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        fadeElements.forEach(element => observer.observe(element));
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(element => observer.observe(element));
+        } else {
+            fadeElements.forEach(element => element.classList.add('visible'));
+        }
 
         // Card Tilt Effect
         const cards = document.querySelectorAll('.feature-card, .how-to-use-card');
@@ -1633,9 +1559,9 @@
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                const tiltX = y / rect.height * 20;
-                const tiltY = -x / rect.width * 20;
-                card.style.transform = `translateY(-10px) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                const tiltX = y / rect.height * 15;
+                const tiltY = -x / rect.width * 15;
+                card.style.transform = `translateY(-5px) scale(1.05) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
@@ -1646,11 +1572,12 @@
         document.querySelectorAll('.download-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.classList.add('loading');
-                setTimeout(() => btn.classList.remove('loading'), 2000);
+                setTimeout(() => btn.classList.remove('loading'), 1500);
             });
         });
 
         // Parallax Effect with Debounce
+        const heroImage = document.querySelector('#hero-image .hero-image-container');
         let lastScroll = 0;
         const debounce = (func, wait) => {
             let timeout;
@@ -1659,17 +1586,16 @@
                 timeout = setTimeout(() => func.apply(this, args), wait);
             };
         };
-
         const handleParallax = debounce(() => {
-            const heroImage = document.querySelector('#hero-image .hero-image-container');
-            const scrollPosition = window.pageYOffset;
-            if (Math.abs(scrollPosition - lastScroll) > 10) {
-                const parallaxValue = scrollPosition * 0.3;
-                heroImage.style.transform = `rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(${parallaxValue}px)`;
-                lastScroll = scrollPosition;
+            if (heroImage) {
+                const scrollPosition = window.pageYOffset;
+                if (Math.abs(scrollPosition - lastScroll) > 10) {
+                    const parallaxValue = scrollPosition * 0.2;
+                    heroImage.style.transform = `rotateX(5deg) rotateY(-10deg) rotateZ(2deg) translateY(${parallaxValue}px)`;
+                    lastScroll = scrollPosition;
+                }
             }
-        }, 100);
-
+        }, 50);
         window.addEventListener('scroll', handleParallax);
     </script>
 </body>
