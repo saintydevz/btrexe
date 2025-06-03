@@ -1488,7 +1488,7 @@
     </footer>
 
     <script>
-        // Mouse-following Glow
+     
         const mouseGlow = document.getElementById('mouse-glow');
         if (mouseGlow) {
             document.addEventListener('mousemove', (e) => {
@@ -1497,7 +1497,7 @@
             });
         }
 
-        // Particle System
+    
         if (window.particlesJS) {
             particlesJS('particles-js', {
                 particles: {
@@ -1529,14 +1529,14 @@
             });
         }
 
-        // FAQ Toggle
+     
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
             });
         });
 
-        // Fade-in Animation
+     
         const fadeElements = document.querySelectorAll('.fade-in');
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver((entries) => {
@@ -1552,7 +1552,7 @@
             fadeElements.forEach(element => element.classList.add('visible'));
         }
 
-        // Card Tilt Effect
+      
         const cards = document.querySelectorAll('.feature-card, .how-to-use-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -1568,7 +1568,7 @@
             });
         });
 
-        // Download Button Loader
+       
         document.querySelectorAll('.download-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.classList.add('loading');
@@ -1576,7 +1576,7 @@
             });
         });
 
-        // Parallax Effect with Debounce
+    
         const heroImage = document.querySelector('#hero-image .hero-image-container');
         let lastScroll = 0;
         const debounce = (func, wait) => {
